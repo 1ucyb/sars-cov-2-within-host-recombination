@@ -23,7 +23,7 @@ for rho, randint in zip(rhos, randints):
       
     # Creates necessary directories for SLiM
     if not os.path.exists("output/" + longRho + "/" + individual):
-        os.makedirs("/well/lythgoe/users/myt341/sars-cov-2/SLiM/output/" + longRho + "/" + individual)
+        os.makedirs("output/" + longRho + "/" + individual)
 
     subprocess.run(["run-slim-sim", rho, str(randint), individual])
 
