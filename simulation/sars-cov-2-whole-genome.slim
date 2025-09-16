@@ -1,0 +1,98 @@
+// A WORD TO THE WISE
+// Do not try to run this script as it stands! The parameters are deeply broken and I haven't had time to fix them.
+// Unless you have a supercomputer, in which case please tell me what you find out.
+
+initialize() {
+	initializeSLiMOptions(nucleotideBased = T); // Creates nucleotide based model
+
+	// Gotta make it haploid!
+	initializeChromosome(1, 29903, type = "H");	
+	
+	// Reads in the Wuhan reference sequence
+	defineConstant("L", initializeAncestralNucleotides("sars-cov-2-ref-seq.txt"));
+	
+	// Have decided this is going to be Delta for now as that's what most of my actual sequences are 
+
+	// m1 mutation type: neutral
+	neutralMutMatrix = (cbind(c(0, 0.027167, 0.052218, 0.027614),
+									 c(0.014397, 0, 0.006995, 0.16206),
+									 c(0.11607, 0.0075237, 0, 0.025418),
+									 c(0.032982, 0.37761, 0.14995, 0)))*5.625e-7*1e4;
+								
+	// Creates a neutral mutation type, a beneficial(ish) type and a deleterious type.
+	initializeMutationTypeNuc("m1", 0.5, "f", 0);
+	initializeMutationTypeNuc("m2", 0.5, "g", -0.03, 0.2);
+	initializeMutationTypeNuc("m3", 0.5, "n", -0.02, 0.03);
+	
+	// g1 genomic element type: non-coding
+	initializeGenomicElementType("g1", m1, 1.0, neutralMutMatrix);
+	
+	// g2 genomic element for structural and other useful genes
+	initializeGenomicElementType("g2", c(m2, m3), c(4, 1), neutralMutMatrix);
+	
+	// g3 genomic element for accessory genes
+	initializeGenomicElementType("g3", m1, 1.0, neutralMutMatrix);
+
+	
+	// initialisees genomic elements from here 
+	initializeGenomicElement(g1, 0, 264);
+	initializeGenomicElement(g2, 265, 21554); // ORF1ab
+	initializeGenomicElement(g1, 21555, 21561);
+	initializeGenomicElement(g2, 21562, 25383); // S
+	initializeGenomicElement(g1, 25384, 25391);
+	initializeGenomicElement(g3, 25392, 26219); // ORF3a
+	initializeGenomicElement(g1, 26220, 26243);
+	initializeGenomicElement(g2, 26244, 26471); // E
+	initializeGenomicElement(g1, 26472, 26521);
+	initializeGenomicElement(g2, 26522, 27190); // M
+	initializeGenomicElement(g1, 27191, 27200);
+	initializeGenomicElement(g3, 27201, 27386); // ORF6
+	initializeGenomicElement(g1, 27387, 27392);
+	initializeGenomicElement(g3, 27393, 27787); // ORF7a & ORF7b
+	initializeGenomicElement(g1, 27788, 27892);
+	initializeGenomicElement(g3, 27893, 28258); // ORF8
+	initializeGenomicElement(g1, 28259, 28272);
+	initializeGenomicElement(g2, 28273, 29532); // N
+	initializeGenomicElement(g1, 29533, 29556);
+	initializeGenomicElement(g3, 29557, 29673); // ORF10
+	initializeGenomicElement(g1, 29674, L-1);
+	
+	// Recombination rate parameter is set up here!
+	initializeRecombinationRate(0.5*(1-(1-2*R)^(1e4)));
+}
+
+// Creates a population of roughly the correct size by growth
+1 early() {
+	sim.addSubpop("p1", 1);
+
+	log = community.createLogFile(paste0("output/", R, "/", X, "/sim_log.txt"));
+	log.addSubpopulationSize(p1);
+}
+
+2:4 early() {
+	p1.setSubpopulationSize(asInteger(p1.individualCount * 50));
+}
+
+43 late() {
+	m1.convertToSubstitution = F;
+	m2.convertToSubstitution = F;
+	m3.convertToSubstitution = F;
+}
+
+44 late() {
+	log = community.logFiles;
+	log.logRow();
+	sim.outputMutations(sim.mutations, filePath = paste0("output/", R, "/", X, "/output_1.txt"));
+}
+
+62 late() {
+	log = community.logFiles;
+	log.logRow();
+	sim.outputMutations(sim.mutations, filePath = paste0("output/", R, "/", X, "/output_2.txt"));
+}
+
+80 late() {
+	log = community.logFiles;
+	log.logRow();
+	sim.outputMutations(sim.mutations, filePath = paste0("output/", R, "/", X, "/output_3.txt"));
+}
