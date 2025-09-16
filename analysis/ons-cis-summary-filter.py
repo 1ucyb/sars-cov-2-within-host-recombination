@@ -13,6 +13,7 @@ import numpy as np
 # It should be noted that this doesn't check for multiple stretches of consecutive samples,
 # which isn't a problem for my dataset but could be an issue for future readers.
 
+print("Reading in summary spreadsheet...")
 df = pd.read_csv("ONS_summary_spreadsheet.csv")
 
 # Counts how many samples there are per person, and removes anybody for whom there's less than three samples
@@ -33,6 +34,7 @@ people["date_range"] = np.nan
 # Works out how far apart samples are.
 # The author would like to apologise to any actual data scientists reading this for how
 # inefficient it is, but she couldn't think of any other way.
+print("Iterating... please wait")
 for i, row in people.iterrows():
 
     # Collects all samples for the person in question and creates a list of the days they were taken
@@ -60,5 +62,6 @@ for i, row in people.iterrows():
 people.drop(columns=["count"], inplace=True) # Drops the count column to avoid duplicating it
 df = df.merge(people, how="left", on="person_id")
 df = df.dropna(subset = "date_range") # And we can drop the NaN rows here!
-
+print("Saving...")
 df.to_csv("filtered_ons_summary.csv", index = False)
+print("Saved!")
