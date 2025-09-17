@@ -1,0 +1,4 @@
+centre,primers,MAF (%),Artefact count,Artefact iSNVs
+SEQU,4,3,10,"['A1T', 'A2T', 'A3T', 'A4T', 'A5T', 'A6T', 'A7T', 'A8T', 'A9T', 'A10T']"
+SEQU,4,5,5,"['A1T', 'A2T', 'A3T', 'A4T', 'A5T']"
+SEQU,4,10,2,"['A1T', 'A2T']"
