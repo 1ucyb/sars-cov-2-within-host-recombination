@@ -9,7 +9,7 @@ This repository contains code written for an eight-week internship project aimin
 
 ## Running the analysis
 
-I am unable to share data from the ONS-CIS as it is sensitive, so this analysis can only be run if you have access to that, or are able to modify the code to suit your dataset. You will also need a list of potential artefacts, which I don't know if I'm allowed to share so I'm opting not to.
+I am unable to share data from the ONS-CIS as it is sensitive, so this analysis can only be run if you have access to that, or are able to modify the code to suit your dataset. You will also need a list of potential artefacts, which I don't know if I'm allowed to share so I'm opting not to. I've included example files to show the expected file structure and information that my code needs, so you can more easily substitute your own data.
 
 1. analysis
    - `ons-cis-summary-filter.py` filters down the ONS-CIS summary document to select only useful individuals.
