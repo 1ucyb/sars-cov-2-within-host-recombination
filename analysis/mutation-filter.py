@@ -51,7 +51,7 @@ def append_muts(basefreqs_row):
 
 # Iterates over each individual
 print("Searching for mutations and calculating frequencies")
-for personID in os.listdir("/sequences"):
+for personID in os.listdir("sequences"):
     if personID == ".DS_Store": # Mac problems :(
         continue
     else:

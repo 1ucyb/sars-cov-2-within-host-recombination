@@ -27,7 +27,9 @@ def diffcalc(row):
     # Appends this list to the list of dicts
     dictList.append(row.to_dict())
 
-for personID in os.listdir("../sequences"):
+listOfResiduals = []
+
+for personID in os.listdir("sequences"):
     if personID == ".DS_Store":
         continue
     else:
@@ -97,6 +99,11 @@ for personID in os.listdir("../sequences"):
         residuals = pd.DataFrame(soManyDifferences, columns = ["residuals"])
         residuals["distance"] = soManyDistances
 
+        listOfResiduals.append(residuals)
+
         # Saves out the correlation coefficients
-        residuals.to_csv("../sequences/"+ personID +"/" + personID + "_residuals_subset.csv", index = False)
+        residuals.to_csv("sequences/"+ personID +"/" + personID + "_residuals_subset.csv", index = False)
         print("Saved")
+
+allResiduals = pd.concat(listOfResiduals)
+allResiduals.to_csv("all_residuals.csv", index = False)

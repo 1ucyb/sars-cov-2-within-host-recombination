@@ -6,6 +6,9 @@ import numpy as np
 ##### Empirical null distribution
 #
 # This script resamples the original dataset to produce an empirical null distribution.
+# NOTE: You'll need to set the number of residuals to use this script correctly.
+
+noResiduals = 2624
 
 # Sets random seed(s). Some functions use the native random seed, others use numpy.
 np.random.seed(6373627)
@@ -16,11 +19,11 @@ cols1 = ["person_id", "mut_id", "1", "2", "3"]
 cols2 = ["person_id", "mut_id", "1", "2"]
 
 # Creates a list of mutations in each individual
-for personID in os.listdir("/sequences"):
+for personID in os.listdir("sequences"):
     if personID == ".DS_Store": # Mac moment
         continue
     else:
-        workingDF = pd.read_csv("/sequences/" + personID + "/" + personID + "_working_subset.csv")
+        workingDF = pd.read_csv("sequences/" + personID + "/" + personID + "_working_subset.csv")
         workingDF.insert(0, "person_id", personID)
         if workingDF.shape[1] == 4:
             workingList.append(pd.DataFrame(workingDF.values, columns=cols2))
@@ -42,7 +45,7 @@ distances = []
 i = 0
 
 # Generates the same number of pairs as in the real sample
-while i <= 15167:
+while i <= int(noResiduals/2):
     # Picks two mutations which have not yet been picked
     sample = random.sample(people, 2)
     sample.sort()

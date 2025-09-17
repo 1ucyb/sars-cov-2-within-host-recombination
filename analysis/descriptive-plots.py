@@ -8,7 +8,7 @@ from statsmodels.graphics.gofplots import qqplot_2samples
 #
 # This script creates several plots illustrating various aspects of the results.
 
-realResiduals = pd.read_csv("allResiduals_subset.csv")
+realResiduals = pd.read_csv("all_residuals.csv")
 realResiduals["origin"] = "real"
 empiricalNull = pd.read_csv("empirical-control_residuals_subset.csv")
 empiricalNull["origin"] = "null"
@@ -30,7 +30,7 @@ df["binned"] = pd.cut(df["distance"], bins = bins, right = True)
 sns.set_theme(style = "whitegrid")
 
 # Plots the distributions of the empirical null and real datasets against each other
-sns.histplot(data = fullDF,
+sns.histplot(data = df,
              x = "residuals",
              hue = "origin",
              alpha = 0.5,
@@ -42,7 +42,7 @@ plt.yscale("log")
 plt.show()
 
 # Same but cumulative
-sns.histplot(data = fullDF,
+sns.histplot(data = df,
              x = "residuals",
              hue = "origin",
              element = "step",
