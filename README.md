@@ -4,8 +4,8 @@ _Investigating the recombination rate of SARS-CoV-2 through the ONS-CIS._
 
 This repository contains code written for an eight-week internship project aiming to understand recombination in SARS-CoV-2 in a within-host context. Using sequences from the [Office for National Statistics Coronavirus Infection Survey](https://www.ons.gov.uk/peoplepopulationandcommunity/healthandsocialcare/conditionsanddiseases/methodologies/coronaviruscovid19infectionsurveyqmi), I investigated the recombination rate of SARS-CoV-2 through a modified version of the methodology from McDonald et al (2016). I then utilised the forward genetic simulation software [SLiM](https://github.com/MesserLab/SLiM) to generate similar datasets with different recombination rates for comparison.
 
->[!WARNING]
->The simulation aspects of this project are incomplete. Specifically, the SLiM script is not correctly parameterised, and is likely to generate a few hundred gigabytes of output if run. This work is also not published or peer reviewed.
+>[!NOTE]
+>The simulation aspects of this project are incomplete. Specifically, the SLiM script is not correctly parameterised, and does not replicate the intended dynamics. This work is also not published or peer reviewed.
 
 ## Running the analysis
 
