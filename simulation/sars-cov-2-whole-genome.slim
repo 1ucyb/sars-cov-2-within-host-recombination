@@ -1,6 +1,6 @@
-// A WORD TO THE WISE
-// Do not try to run this script as it stands! The parameters are deeply broken and I haven't had time to fix them.
-// Unless you have a supercomputer, in which case please tell me what you find out.
+// NOTE:
+// This script does not work to simulate observed dynamics in SARS-CoV-2!
+// Also, you will need a reference genome in the same directory to run this.
 
 initialize() {
 	initializeSLiMOptions(nucleotideBased = T); // Creates nucleotide based model
@@ -69,7 +69,7 @@ initialize() {
 	log.addSubpopulationSize(p1);
 }
 
-2:4 early() {
+2:3 early() {
 	p1.setSubpopulationSize(asInteger(p1.individualCount * 50));
 }
 
